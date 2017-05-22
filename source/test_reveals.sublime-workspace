@@ -1,0 +1,396 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"conf",
+				"configuration"
+			],
+			[
+				"raps",
+				"raspberrypi"
+			],
+			[
+				"Home",
+				"homebridge-vera"
+			],
+			[
+				"www",
+				"www-data"
+			],
+			[
+				"group",
+				"groupe"
+			],
+			[
+				"ngn",
+				"Nginx"
+			],
+			[
+				"un",
+				"une"
+			],
+			[
+				"va",
+				"vassaux"
+			],
+			[
+				"répert",
+				"répertoires"
+			],
+			[
+				"inter",
+				"interfaces"
+			],
+			[
+				"smbc_",
+				"smbc_enable"
+			],
+			[
+				"docker-",
+				"docker-compose"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "conf.py",
+			"settings":
+			{
+				"buffer_size": 8792,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.rst",
+			"settings":
+			{
+				"buffer_size": 2186,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "# -*- coding: utf-8 -*-\n\"\"\"\n    sphinxjp.themes.revealjs.directives\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n    :author: tell-k <ffk2005@gmail.com>\n    :copyright: tell-k. All Rights Reserved.\n\"\"\"\nfrom docutils import nodes\nfrom docutils.parsers.rst import directives, Directive\nfrom docutils.parsers.rst.roles import set_classes\n\nfrom sphinxjp.themes.revealjs import compat\n\n__docformat__ = 'reStrructuredText'\n\n\nclass revealjs(nodes.General, nodes.Element):\n    \"\"\" node for revealjs \"\"\"\n\n\nclass rv_code(nodes.General, nodes.Element):\n    \"\"\" node for revealjs code section \"\"\"\n\n\nclass rv_small(nodes.General, nodes.Element):\n    \"\"\" node for revealjs small text section \"\"\"\n\n\nclass rv_note(nodes.General, nodes.Element):\n    \"\"\" node for revealjs presentation note \"\"\"\n\n\ndef heading(argument):\n    \"\"\" directives choices for heading tag \"\"\"\n    return directives.choice(argument, ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))\n\n\nclass RevealjsDirective(Directive):\n    \"\"\" Reveal.JS slide entry  \"\"\"\n\n    has_content = True\n    required_arguments = 0\n    optional_arguments = 100\n    final_argument_whitespace = False\n\n    option_spec = {\n        'id': directives.unchanged,\n        'class': directives.class_option,\n        'noheading': directives.flag,\n        'title-heading': heading,\n        'subtitle': directives.unchanged,\n        'subtitle-heading': directives.unchanged,\n        'data-autoslide': directives.unchanged,\n        'data-markdown': directives.unchanged,\n        'data-transition': directives.unchanged,\n        'data-transition-speed': directives.unchanged,\n        'data-background': directives.unchanged,\n        'data-background-repeat': directives.unchanged,\n        'data-background-size': directives.unchanged,\n        'data-background-transition': directives.unchanged,\n        'data-state': directives.unchanged,\n        'data-separator': directives.unchanged,\n        'data-separator-vertical': directives.unchanged,\n        'data-separator-notes': directives.unchanged,\n        'data-charset': directives.unchanged,\n    }\n\n    node_class = revealjs\n\n    def run(self):\n        \"\"\" build revealjs node \"\"\"\n\n        set_classes(self.options)\n\n        text = '\\n'.join(self.content)\n        node = self.node_class(text, **self.options)\n\n        self.add_name(node)\n\n        if \"data-markdown\" not in self.options:\n            self.state.nested_parse(self.content, self.content_offset, node)\n\n        if self.arguments:\n            node['title'] = \" \".join(self.arguments)\n\n        node['noheading'] = ('noheading' in self.options)\n\n        options_list = (\n            'id',\n            'title-heading',\n            'subtitle-heading',\n            'data-autoslide',\n            'data-transition',\n            'data-transition-speed',\n            'data-background',\n            'data-background-repeat',\n            'data-background-size',\n            'data-background-transition',\n            'data-state',\n            'data-markdown',\n            'data-separator',\n            'data-separator-vertical',\n            'data-separator-notes',\n            'data-charset',\n        )\n        for option in options_list:\n            if option in self.options:\n                node[option] = self.options.get(option)\n        return [node]\n\n\nclass RvSmallDirective(Directive):\n    \"\"\"\n    Create small text tag.\n    \"\"\"\n    has_content = True\n    required_arguments = 0\n    optional_arguments = 0\n    final_argument_whitespace = False\n\n    option_spec = {\n        'class': directives.class_option,\n    }\n    node_class = rv_small\n\n    def run(self):\n        \"\"\" build rv_small node \"\"\"\n\n        set_classes(self.options)\n        self.assert_has_content()\n        text = '\\n'.join(self.content)\n        node = self.node_class(text, **self.options)\n        self.add_name(node)\n        self.state.nested_parse(self.content, self.content_offset, node)\n        return [node]\n\n\nclass RvNoteDirective(Directive):\n    \"\"\"\n    Directive for a notes tag.\n    \"\"\"\n    has_content = True\n    required_arguments = 0\n    optional_arguments = 0\n    final_argument_whitespace = False\n\n    option_spec = {\n        'class': directives.class_option,\n    }\n    node_class = rv_note\n\n    def run(self):\n        \"\"\" build rv_note node \"\"\"\n        set_classes(self.options)\n        self.assert_has_content()\n        text = '\\n'.join(self.content)\n        node = self.node_class(text, **self.options)\n        self.add_name(node)\n        self.state.nested_parse(self.content, self.content_offset, node)\n        return [node]\n\n\nclass RvCodeDirective(Directive):\n    \"\"\"\n    Directive for a code block with highlight.js\n    \"\"\"\n\n    has_content = True\n    required_arguments = 0\n    optional_arguments = 0\n    final_argument_whitespace = False\n    option_spec = {}\n    node_class = rv_code\n\n    def run(self):\n        \"\"\" build rv_code node \"\"\"\n        set_classes(self.options)\n        self.assert_has_content()\n        node = self.node_class('\\n'.join(self.content), **self.options)\n        return [node]\n\n\ndef visit_revealjs(self, node):\n    \"\"\" build start tag for revealjs \"\"\"\n    section_attr = {}\n    markdown_headings = {\"h1\": \"#\", \"h2\": \"##\", \"h3\": \"###\",\n                         \"h4\": \"####\", \"h5\": \"#####\", \"h6\": \"######\"}\n\n    if node.get(\"id\"):\n        section_attr.update({\"ids\": [node.get(\"id\")]})\n\n    attr_list = (\n        'data-autoslide',\n        'data-transition',\n        'data-transition-speed',\n        'data-background',\n        'data-background-repeat',\n        'data-background-size',\n        'data-background-transition',\n        'data-state',\n        'data-markdown',\n        'data-separator',\n        'data-separator-vertical',\n        'data-separator-notes',\n        'data-charset',\n    )\n    for attr in attr_list:\n        if node.get(attr) is not None:\n            section_attr.update({attr: node.get(attr)})\n\n    title = None\n    if node.get(\"title\") and not node.get('noheading'):\n        title = node.get(\"title\")\n\n    title_heading = node.get('title-heading', 'h2')\n    subtitle = node.get(\"subtitle\")\n    subtitle_heading = node.get('subtitle-heading', 'h3')\n    if node.get(\"data-markdown\") is not None:\n\n        title_base = compat.text(\"%(heading)s %(title)s \\n\")\n        title_text = None\n        if title:\n            title_text = title_base % dict(\n                heading=markdown_headings.get(title_heading),\n                title=title\n            )\n\n        subtitle_text = None\n        if subtitle:\n            subtitle_text = title_base % dict(\n                heading=markdown_headings.get(subtitle_heading),\n                title=subtitle\n            )\n    else:\n        title_base = compat.text(\"<%(heading)s>%(title)s</%(heading)s>\\n\")\n        title_text = None\n        if title:\n            title_text = title_base % dict(\n                title=title,\n                heading=title_heading)\n\n        subtitle_text = None\n        if subtitle:\n            subtitle_text = title_base % dict(\n                title=subtitle,\n                heading=subtitle_heading)\n\n    if node.get(\"data-markdown\") is not None:\n        self.body.append(self.starttag(node, 'section', **section_attr))\n        if node.get(\"data-markdown\") == compat.text(\"\"):\n            self.body.append(\"<script type='text/template'>\\n\")\n            if title_text:\n                self.body.append(title_text)\n            if subtitle_text:\n                self.body.append(subtitle_text)\n            self.body.append(node.rawsource)\n            self.body.append(\"</script>\\n\")\n    else:\n        self.body.append(self.starttag(node, 'section', **section_attr))\n        if title_text:\n            self.body.append(title_text)\n        if subtitle_text:\n            self.body.append(subtitle_text)\n        self.set_first_last(node)\n\n\ndef depart_revealjs(self, node=None):\n    \"\"\" build end tag for revealjs \"\"\"\n    self.body.append('</section>\\n')\n\n\ndef visit_rv_code(self, node):\n    \"\"\" build start tag for rv_code \"\"\"\n\n    self.body.append(self.starttag(node, 'pre'))\n    self.body.append(\"<code data-trim contenteditable>\")\n    self.body.append(node.rawsource)\n\n\ndef depart_rv_code(self, node=None):\n    \"\"\" build end tag for rv_code \"\"\"\n\n    self.body.append(\"</code>\")\n    self.body.append(\"</pre>\\n\")\n\n\ndef visit_rv_small(self, node):\n    \"\"\" build start tag for rv_small \"\"\"\n    self.body.append(self.starttag(node, 'small'))\n    self.set_first_last(node)\n\n\ndef depart_rv_small(self, node=None):\n    \"\"\" build end tag for rv_small\"\"\"\n    self.body.append(\"</small>\\n\")\n\n\ndef visit_rv_note(self, node):\n    \"\"\" build start tag for rv_note \"\"\"\n    self.body.append(self.starttag(node, 'aside', **{'class': 'notes'}))\n    self.set_first_last(node)\n\n\ndef depart_rv_note(self, node=None):\n    \"\"\" build end tag for rv_note \"\"\"\n    self.body.append(\"</aside>\\n\")\n\n\ndef setup(app):\n    \"\"\"Initialize \"\"\"\n    app.info('Initializing RevealJS theme directives')\n    app.add_node(revealjs, html=(visit_revealjs, depart_revealjs))\n    app.add_node(rv_code, html=(visit_rv_code, depart_rv_code))\n    app.add_node(rv_note, html=(visit_rv_note, depart_rv_note))\n    app.add_node(rv_small, html=(visit_rv_small, depart_rv_small))\n    app.add_directive('revealjs', RevealjsDirective)\n    app.add_directive('rv_code', RvCodeDirective)\n    app.add_directive('rv_note', RvNoteDirective)\n    app.add_directive('rv_small', RvSmallDirective)\n    return\n",
+			"file": "/Volumes/Data/Users/patrick/venv/docs/lib/python3.6/site-packages/sphinxjp/themes/revealjs/directives.py",
+			"file_size": 9675,
+			"file_write_time": 131398350230000000,
+			"settings":
+			{
+				"buffer_size": 9354,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "ins",
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 485.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Data/Users/patrick/projects/tech-docs/servers_ip.rst",
+		"/Volumes/Data/Users/patrick/Downloads/index.rst",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Raspberrypi.rst",
+		"/Volumes/Data/Users/patrick/Dropbox/Epargne/macro_remove_xls_protection_OK_GOOD.txt",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Homelive.rst",
+		"/Volumes/Data/Users/patrick/Dropbox/WD.txt",
+		"/Volumes/Data/Users/patrick/Downloads/2017-03-18T09-05-03.000Z_Running.tcx",
+		"/Volumes/Data/Users/patrick/LocalDocs/Logiciels/Pycharm License/Pycharm_license_3O1CAR2GO8.txt",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/MacOS-commands.rst",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Installs.rst",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/DNS320-Alt-F.rst",
+		"/Volumes/Data/Users/patrick/projects/homeserver/docs/index.rst",
+		"/Volumes/Data/Users/patrick/Downloads/README-0.1RC5.txt",
+		"/Volumes/Data/Users/patrick/Downloads/DEBUG.txt",
+		"/Volumes/Data/Users/patrick/projects/if/update.sh",
+		"/Volumes/Data/Users/patrick/projects/if/cookies.txt",
+		"/Volumes/Data/Users/patrick/projects/if/includeURLs.txt",
+		"/Volumes/Data/Users/patrick/projects/if/.wgetrc",
+		"/Volumes/Data/Users/patrick/projects/if/wget.txt",
+		"/Volumes/Data/Users/patrick/projects/if/linvestisseurfrancais.com/club/index.html?p=35831.html",
+		"/Volumes/Data/Users/patrick/projects/if/linvestisseurfrancais.com/club/dom-security-ex-securidev-un-leader-regional-et-quelques-defis/index.html",
+		"/Volumes/Data/Users/patrick/projects/if/linvestisseurfrancais.com/club/index.html?p=758.html",
+		"/Volumes/Data/Users/patrick/projects/if/linvestisseurfrancais.com/club/1000mercis/index.html",
+		"/Volumes/Data/Users/patrick/.wgetrc",
+		"/Volumes/Data/Users/patrick/Downloads/PyCharm 2016 (Linux, Window)/ReadMe.txt",
+		"/Applications/PyCharm.app/Contents/bin/pycharm.vmoptions",
+		"/Volumes/NO NAME/Nemo.txt",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Reverse proxy HTTPS.rst",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Docker for Mac.rst",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/Raspberrypi",
+		"/Volumes/Data/Users/patrick/projects/tech-docs/docker-compose.yml"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"\"",
+			"class",
+			".home",
+			"vnc",
+			"Pi",
+			"trigger",
+			"no_clobber",
+			"/,/",
+			"timestamp",
+			"--random",
+			"projects",
+			"skins/default/css/libs.css",
+			"\"\n",
+			"]",
+			"[",
+			"tcpdump"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'",
+			"",
+			"'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "conf.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5269,
+								5269
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2845.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "index.rst",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2186,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1106,
+								1106
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/RestructuredText Improved/reStructuredText Improved.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Volumes/Data/Users/patrick/venv/docs/lib/python3.6/site-packages/sphinxjp/themes/revealjs/directives.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9354,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								340,
+								340
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "test_reveals.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/projects/tech-docs/servers_ip.rst"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
