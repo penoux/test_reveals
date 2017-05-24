@@ -246,10 +246,10 @@ sphinxjp.themes.revealjs
 
   And it starts again! 
 
-.. revealjs::
+.. revealjs:: Background color (red)
   :data-background-color: #ff0000
 
-  Background color red
+  Background color red: :code:`:data-background-color: #ff0000`.
 
 .. revealjs:: Clever Quotes
 
@@ -315,24 +315,29 @@ sphinxjp.themes.revealjs
 
    This slide has fragments which are also stepped through in the notes window.
 
-  .. revealjs:: Fragments without raw html ;)
+ .. revealjs:: Fragments without raw html ;) (#1)
 
-    Test fragment :
+  Fading fragments :
 
-      * :fr-grow:`grow`
-      * :fr-shrink:`shrink`
-      * :fr-fade-out:`fade-out`
-      * :fr-fade-up:`fade-up and others`
-      * :fr-fade-down:`fade-down`
-      * :fr-fade-left:`fade-left`
-      * :fr-fade-right:`fade-right`
-      * :fr-current-visible:`current-visible`
-      * :fr-highlight-current-red:`highlight-current-blue`
-      * :fr-highlight-current-green:`highlight-current-green`
-      * :fr-highlight-current-blue:`highlight-current-blue`
-      * :fr-highlight-red:`highlight-red`
-      * :fr-highlight-green:`highlight-green`
-      * :fr-highlight-blue:`highlight-blue`
+    * :fr-grow:`grow`
+    * :fr-shrink:`shrink`
+    * :fr-fade-out:`fade-out`
+    * :fr-fade-up:`fade-up and others`
+    * :fr-fade-down:`fade-down`
+    * :fr-fade-left:`fade-left`
+    * :fr-fade-right:`fade-right`
+
+ .. revealjs:: Fragments without raw html ;) (#2)
+
+  Colored fragments :
+
+    * :fr-current-visible:`current-visible`
+    * :fr-highlight-current-red:`highlight-current-blue`
+    * :fr-highlight-current-green:`highlight-current-green`
+    * :fr-highlight-current-blue:`highlight-current-blue`
+    * :fr-highlight-red:`highlight-red`
+    * :fr-highlight-green:`highlight-green`
+    * :fr-highlight-blue:`highlight-blue`
 
  .. revealjs:: Fragment Styles
 

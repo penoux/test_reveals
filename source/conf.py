@@ -284,8 +284,7 @@ texinfo_documents = [
 
 def setup(app):
     app.add_javascript("js/jquery.min.js")
-    app.add_javascript("custom.js")
-    app.add_stylesheet('custom.css') 
+    app.add_javascript("fragments.js")
 
 # http://www.sphinx-doc.org/en/stable/config.html#confval-rst_prolog
 rst_prolog = '''
