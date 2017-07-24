@@ -7,8 +7,6 @@ sphinxjp.themes.revealjs
  :subtitle: REVEAL.JS presentation style theme for Sphinx
  :subtitle-heading: h3
 
- .. rv_small::
-
   Created by `tell-k <http://github.com/tell-k>`_ / `@tell-k <http://twitter.com/tell_k>`_
   Updated by `penoux <http://github.com/penoux>`_
 
@@ -102,26 +100,6 @@ sphinxjp.themes.revealjs
    * - Bread
      - $3
      - 2
-
-.. revealjs:: Markdown support
- :data-markdown:
-
- For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
- ```
- .. revealjs:: Markdown support
-  :data-markdown:
-
-  For those of you who like that sort of thing. Instructions and a bit
-  more info available[here](https://github.com/hakimel/reveal.js#markdown).
- ```
-
-.. revealjs:: External Markdown
- :data-markdown: _static/external.md
- :data-separator: ^\n\n\n
- :data-separator-vertical: ^\n\n
- :data-separator-notes: ^Speaker:
-
 
 .. revealjs:: Transition Styles
  :id: transitions
