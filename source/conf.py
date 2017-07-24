@@ -197,7 +197,7 @@ html_theme_options = {
     'background_transition': 'default',
 
     # Theme (black/white/league/beige/sky/night/serif/simple/solarized)
-    'theme': 'beige',
+    'theme': 'night',
 
     # Parallax background image
     # CSS syntax, e.g. 'a.jpg'
@@ -284,8 +284,10 @@ texinfo_documents = [
 
 def setup(app):
     app.add_javascript("js/jquery.min.js")
-    app.add_javascript("js/fragments.js")
-    app.add_stylesheet('css/reveal-override.css')
+    app.add_javascript("js/orange-reveal.js")
+    app.add_stylesheet('css/colors.css')
+    app.add_stylesheet('css/orange-reveal-override.css')
+
 
 # http://www.sphinx-doc.org/en/stable/config.html#confval-rst_prolog
 rst_prolog = '''

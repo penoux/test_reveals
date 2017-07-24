@@ -299,6 +299,7 @@ sphinxjp.themes.revealjs
 
     * :fr-grow:`grow`
     * :fr-shrink:`shrink`
+    * :fr-fade-in:`fade-in`
     * :fr-fade-out:`fade-out`
     * :fr-fade-up:`fade-up and others`
     * :fr-fade-down:`fade-down`
@@ -357,6 +358,28 @@ sphinxjp.themes.revealjs
   :height: 299
   :alt: Meny
 
+.. revealjs:: Slide box, header and footer
+ 
+ .. container:: bbox
+
+  .. container:: slideheader
+
+   Slide caption, always displayed at the same place
+
+  .. container:: sliderow
+
+   .. container:: leftcol
+
+    Text in column 1.
+
+   .. container:: rightcol
+
+    Text in column 2.
+
+  .. container:: slidefooter
+  
+   Slide footer, spans 100%
+
 .. revealjs:: Export to PDF
 
  Presentations can be `exported to PDF <https://github.com/hakimel/reveal.js#pdf-export>`_, below is an example that's been uploaded to SlideShare.
@@ -382,3 +405,4 @@ sphinxjp.themes.revealjs
  :title-heading: h2
  :subtitle-heading: h3
  :subtitle: BY tell-k
+

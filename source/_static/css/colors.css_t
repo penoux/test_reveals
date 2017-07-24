@@ -1,0 +1,92 @@
+/*
+ * CSS hacks and small modification for my Sphinx website
+ * :copyright: Copyright 2013-2016 Lilian Besson
+ * :license: GPLv3, see LICENSE for details.
+ */
+/* Colors and text decoration.
+ For example, :black:`text in black` or :blink:`text blinking` in rST. */
+.black    { color:black; }
+.gray     { color:gray; }
+.grey     { color:gray; }
+.silver   { color:silver; }
+.white    { color:white; }
+.maroon   { color:maroon; }
+.red      { color:red; }
+.magenta  { color:magenta; }
+.fuchsia  { color:fuchsia; }
+.pink     { color:pink; }
+.orange   { color:orange; }
+.yellow   { color:yellow; }
+.lime     { color:lime; }
+.green    { color:green; }
+.olive    { color:olive; }
+.teal     { color:teal; }
+.cyan     { color:cyan; }
+.aqua     { color:aqua; }
+.blue     { color:blue; }
+.navy     { color:navy; }
+.purple   { color:purple; }
+.under    { text-decoration: underline; }
+.over     { text-decoration: overline; }
+.blink    { text-decoration: blink; }
+.line     { text-decoration: line-through; }
+.strike   { text-decoration: line-through; }
+.it       { font-style: italic; }
+.ob       { font-style: oblique; }
+.small    { font-size: small; }
+.large    { font-size: large; }
+
+/* Orange colors */
+.o-gray1    { color: #595959; }
+.o-gray2    { color: #8F8F8F; }
+.o-gray3    { color: #D6D6D6; }
+.o-orange   { color: #FF7900; }
+.o-blue     { color: #4BB4E6; }
+.o-yellow   { color: #FFDC00; }
+.o-green    { color: #50BE87; }
+.o-magenta  { color: #9164CD; }
+
+/* Background colors */
+.black-bg-parent    { background-color:black; }
+.gray-bg-parent     { background-color:gray; }
+.grey-bg-parent     { background-color:gray; }
+.silver-bg-parent   { background-color:silver; }
+.white-bg-parent    { background-color:white; }
+.maroon-bg-parent   { background-color:maroon; }
+.red-bg-parent      { background-color:red; }
+.magenta-bg-parent  { background-color:magenta; }
+.fuchsia-bg-parent  { background-color:fuchsia; }
+.pink-bg-parent     { background-color:pink; }
+.orange-bg-parent   { background-color:orange; }
+.yellow-bg-parent   { background-color:yellow; }
+.lime-bg-parent     { background-color:lime; }
+.green-bg-parent    { background-color:green; }
+.olive-bg-parent    { background-color:olive; }
+.teal-bg-parent     { background-color:teal; }
+.cyan-bg-parent     { background-color:cyan; }
+.aqua-bg-parent     { background-color:aqua; }
+.blue-bg-parent     { background-color:blue; }
+.navy-bg-parent     { background-color:navy; }
+.purple-bg-parent   { background-color:purple; }
+
+/* Orange background colors */
+.o-gray1-bg-parent    { background-color: #595959; }
+.o-gray2-bg-parent    { background-color: #8f8f8f; }
+.o-gray3-bg-parent    { background-color: #d6d6d6; }
+.o-orange-bg-parent   { background-color: #ff7900; }
+.o-blue-bg-parent     { background-color: #4bb4e6; }
+.o-yellow-bg-parent   { background-color: #ffdc00; }
+.o-green-bg-parent    { background-color: #50be87; }
+.o-magenta-bg-parent  { background-color: #9164cd; }
+
+/* CSS variables for Orange colors */
+:root {
+	--o-gray1:#595959;
+	--o-gray2:#8f8f8f;
+	--o-gray3:#d6d6d6;
+	--o-orange:#ff7900;
+	--o-blue:#4bb4e6;
+	--o-yellow:#ffdc00;
+	--o-green:#50be87;
+	--o-magenta:#9164cd;
+}
